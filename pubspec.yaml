@@ -25,16 +25,25 @@ dependencies:
     sdk: flutter
 
 
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
+  url_launcher:
+  flutter_statusbarcolor:
+  sqflite:
+  path_provider: ^1.6.8
+  flutter_barcode_scanner:
+  flutter_share: 1.0.0
+  share: ^0.6.5+4
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  flutter_barcode_scanner:
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -50,6 +59,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - asset/qr-code.png
+    - asset/qr_code_scanning.jpg
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

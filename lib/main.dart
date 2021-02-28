@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:qrcodescanner/screen/code_details.dart';
 import 'package:qrcodescanner/screen/home_screen.dart';
 
 void main() {
@@ -13,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: CodeDetails(),
+      home: HomeScreen(),
 
     );
   }

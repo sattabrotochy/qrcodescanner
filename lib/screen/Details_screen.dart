@@ -1,47 +1,39 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:qrcodescanner/Database/database_halper.dart';
 import 'package:qrcodescanner/Model/my_model.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_share/flutter_share.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class CodeDetails extends StatefulWidget {
-  String code;
+class DetailsScreen extends StatefulWidget {
+  final String title;
   final Note note;
 
-  CodeDetails(
-    this.note,
-    this.code,
-  );
+  DetailsScreen(this.note, this.title);
 
   @override
-  _CodeDetailsState createState() {
-    return _CodeDetailsState(this.note, this.code);
+  _DetailsScreenState createState() {
+    return _DetailsScreenState(this.note, this.title);
   }
 }
 
-class _CodeDetailsState extends State<CodeDetails> {
-  DatabaseHelper helper = DatabaseHelper();
-  String code;
+class _DetailsScreenState extends State<DetailsScreen> {
+  String title;
   Note note;
+  String name;
 
-  _CodeDetailsState(this.note, this.code);
+  _DetailsScreenState(this.note, this.title);
 
-  GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> key=new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     FlutterStatusbarcolor.setStatusBarColor(Colors.cyan[600]);
 
-    if (widget.code == "no data") {
-    } else {
-      _saveData();
-    }
+    name = note.title;
 
     return Scaffold(
       key: key,
-      backgroundColor: Colors.white,
       body: Column(
         children: [
           Stack(
@@ -111,7 +103,7 @@ class _CodeDetailsState extends State<CodeDetails> {
                                 bottomRight: Radius.circular(10))),
                         child: Center(
                           child: Text(
-                            widget.code,
+                            name,
                             style: TextStyle(fontSize: 20, color: Colors.white),
                             maxLines: 1,
                           ),
@@ -122,39 +114,10 @@ class _CodeDetailsState extends State<CodeDetails> {
                         children: [
                           InkWell(
                             onTap: () async {
-                              if (widget.code == "no data") {
-                                // _showSnackBar(context, 'Note Data not found');
-                                key.currentState.showSnackBar(new SnackBar(
-                                  backgroundColor: Colors.cyan[600],
-                                  content: new Text("Note Data not found"),
-                                ));
-                              } else {
-                                int result;
-                                if (note.id != null) {
-                                  // Case 1: Update operation
-                                  // _showSnackBar(context, 'Note Data not found');
-                                } else {
-                                  // Case 2: Insert Operation
-                                  result = await helper.insertNote(note);
-                                  key.currentState.showSnackBar(new SnackBar(
-                                    backgroundColor: Colors.cyan[600],
-                                    content:
-                                        new Text("Note Saved Successfully"),
-                                  ));
-                                  // _showSnackBar(
-                                  //     context, 'Note Saved Successfully');
-                                }
+                              Clipboard.setData(new ClipboardData(text: name));
+                              key.currentState.showSnackBar(
+                                  new SnackBar(content: new Text("Copied to Clipboard"),));
 
-                                if (result != 0) {
-                                  // Success
-                                  _showSnackBar(
-                                      context, 'Note Saved Successfully');
-                                } else {
-                                  // Failure
-                                  _showSnackBar(context, 'Problem Saving Note');
-                                }
-                              }
-                              note.title = widget.code;
                             },
                             child: Container(
                               width: 70,
@@ -177,7 +140,7 @@ class _CodeDetailsState extends State<CodeDetails> {
                                   ]),
                               child: Center(
                                   child: Icon(
-                                Icons.save,
+                                Icons.copy,
                                 color: Colors.white,
                                 size: 30,
                               )),
@@ -185,7 +148,7 @@ class _CodeDetailsState extends State<CodeDetails> {
                           ),
                           InkWell(
                             onTap: () {
-                              sharedata(" ", "${widget.code}");
+                              sharedata(" ", "$name");
                             },
                             child: Container(
                               width: 70,
@@ -264,28 +227,12 @@ class _CodeDetailsState extends State<CodeDetails> {
   }
 
   _launchURL() async {
-    String url = widget.code;
+    String url = name;
     await launch(url);
     // if (await canLaunch(widget.code)) {
     //   await launch(widget.code);
     // } else {
     //   throw 'Could not launch';
     // }
-  }
-
-  void _showSnackBar(BuildContext context, String message) {
-    final snackBar =
-        SnackBar(backgroundColor: Colors.cyan[600], content: Text(message));
-    Scaffold.of(context).showSnackBar(snackBar);
-  }
-
-  void _saveData() async {
-    note.title = widget.code;
-    int result;
-    if (note.id != null) {
-    } else {
-      // Case 2: Insert Operation
-      result = await helper.insertNote2(note);
-    }
   }
 }
