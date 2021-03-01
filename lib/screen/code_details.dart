@@ -11,9 +11,9 @@ class CodeDetails extends StatefulWidget {
   final Note note;
 
   CodeDetails(
-    this.note,
-    this.code,
-  );
+      this.note,
+      this.code,
+      );
 
   @override
   _CodeDetailsState createState() {
@@ -55,10 +55,10 @@ class _CodeDetailsState extends State<CodeDetails> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Container(
-                          margin: EdgeInsets.only(top: 30, left: 15),
+                          margin: EdgeInsets.only(top: 35, left: 15),
                           child: IconButton(
                             icon: Icon(
-                              Icons.arrow_back_ios,
+                              Icons.arrow_back,
                               color: Colors.white,
                               size: 30,
                             ),
@@ -124,6 +124,7 @@ class _CodeDetailsState extends State<CodeDetails> {
                             onTap: () async {
                               if (widget.code == "no data") {
                                 // _showSnackBar(context, 'Note Data not found');
+                                // ignore: deprecated_member_use
                                 key.currentState.showSnackBar(new SnackBar(
                                   backgroundColor: Colors.cyan[600],
                                   content: new Text("Note Data not found"),
@@ -136,10 +137,11 @@ class _CodeDetailsState extends State<CodeDetails> {
                                 } else {
                                   // Case 2: Insert Operation
                                   result = await helper.insertNote(note);
+                                  // ignore: deprecated_member_use
                                   key.currentState.showSnackBar(new SnackBar(
                                     backgroundColor: Colors.cyan[600],
                                     content:
-                                        new Text("Note Saved Successfully"),
+                                    new Text("Note Saved Successfully"),
                                   ));
                                   // _showSnackBar(
                                   //     context, 'Note Saved Successfully');
@@ -177,15 +179,27 @@ class _CodeDetailsState extends State<CodeDetails> {
                                   ]),
                               child: Center(
                                   child: Icon(
-                                Icons.save,
-                                color: Colors.white,
-                                size: 30,
-                              )),
+                                    Icons.favorite_border,
+                                    color: Colors.white,
+                                    size: 30,
+                                  )),
                             ),
                           ),
                           InkWell(
                             onTap: () {
-                              sharedata(" ", "${widget.code}");
+
+                              if (widget.code == "no data")
+                              {
+                                // ignore: deprecated_member_use
+                                key.currentState.showSnackBar(new SnackBar(
+                                  backgroundColor: Colors.cyan[600],
+                                  content: new Text("Note Data not found"),
+                                ));
+                              }
+                              else{
+                                sharedata(" ", "${widget.code}");
+                              }
+
                             },
                             child: Container(
                               width: 70,
@@ -208,14 +222,40 @@ class _CodeDetailsState extends State<CodeDetails> {
                                   ]),
                               child: Center(
                                   child: Icon(
-                                Icons.share,
-                                size: 30,
-                                color: Colors.white,
-                              )),
+                                    Icons.share,
+                                    size: 30,
+                                    color: Colors.white,
+                                  )),
                             ),
                           ),
                           InkWell(
-                            onTap: _launchURL,
+
+                            onTap:()
+                            {
+
+                              if (widget.code == "no data")
+                              {
+                                // ignore: deprecated_member_use
+                                key.currentState.showSnackBar(new SnackBar(
+                                  backgroundColor: Colors.cyan[600],
+                                  content: new Text("Note Data not found"),
+                                ));
+                              }
+                              else if(widget.code != "http")
+                              {
+                                // ignore: deprecated_member_use
+                                key.currentState.showSnackBar(new SnackBar(
+                                  backgroundColor: Colors.cyan[600],
+                                  content: new Text("This is a text"),
+                                ));
+
+                              }
+                              else{
+                                _launchURL();
+                              }
+
+
+                            },
                             child: Container(
                               width: 70,
                               height: 50,
@@ -237,10 +277,10 @@ class _CodeDetailsState extends State<CodeDetails> {
                                   ]),
                               child: Center(
                                   child: Icon(
-                                Icons.open_in_browser,
-                                size: 30,
-                                color: Colors.white,
-                              )),
+                                    Icons.open_in_browser,
+                                    size: 30,
+                                    color: Colors.white,
+                                  )),
                             ),
                           ),
                         ],
@@ -266,26 +306,20 @@ class _CodeDetailsState extends State<CodeDetails> {
   _launchURL() async {
     String url = widget.code;
     await launch(url);
-    // if (await canLaunch(widget.code)) {
-    //   await launch(widget.code);
-    // } else {
-    //   throw 'Could not launch';
-    // }
   }
 
   void _showSnackBar(BuildContext context, String message) {
     final snackBar =
-        SnackBar(backgroundColor: Colors.cyan[600], content: Text(message));
+    SnackBar(backgroundColor: Colors.cyan[600], content: Text(message));
+    // ignore: deprecated_member_use
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
   void _saveData() async {
     note.title = widget.code;
-    int result;
     if (note.id != null) {
     } else {
-      // Case 2: Insert Operation
-      result = await helper.insertNote2(note);
+      await helper.insertNote2(note);
     }
   }
 }

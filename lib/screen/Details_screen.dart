@@ -24,7 +24,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   _DetailsScreenState(this.note, this.title);
 
-  GlobalKey<ScaffoldState> key=new GlobalKey<ScaffoldState>();
+  GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -115,9 +115,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                           InkWell(
                             onTap: () async {
                               Clipboard.setData(new ClipboardData(text: name));
-                              key.currentState.showSnackBar(
-                                  new SnackBar(content: new Text("Copied to Clipboard"),));
-
+                              // ignore: deprecated_member_use
+                              key.currentState.showSnackBar(new SnackBar(
+                                content: new Text("Copied to Clipboard"),
+                              ));
                             },
                             child: Container(
                               width: 70,

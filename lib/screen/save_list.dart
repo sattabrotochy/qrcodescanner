@@ -17,6 +17,7 @@ class _SaveListState extends State<SaveList> {
   @override
   Widget build(BuildContext context) {
     if (noteList == null) {
+      // ignore: deprecated_member_use
       noteList = List<Note>();
       updateListView();
     }
@@ -39,7 +40,7 @@ class _SaveListState extends State<SaveList> {
           child: Card(
             color: Colors.cyan[600],
             elevation: 2.0,
-            child: ListTile(
+            child: noteList != null ? ListTile(
               title: Text(
                 this.noteList[index].title,
                 style: TextStyle(color: Colors.white),
@@ -55,8 +56,10 @@ class _SaveListState extends State<SaveList> {
               ),
               onTap: () {
                 // debugPrint("ListTile Tapped");
-                 navigateToDetail(this.noteList[index],'Favorite');
+                navigateToDetail(this.noteList[index],'Favorite');
               },
+            ):Center(
+              child: Text("No Data"),
             ),
           ),
         );
@@ -87,7 +90,8 @@ class _SaveListState extends State<SaveList> {
 
   void _showSnackBar(BuildContext context, String message) {
     final snackBar =
-        SnackBar(backgroundColor: Colors.cyan[600], content: Text(message));
+    SnackBar(backgroundColor: Colors.cyan[600], content: Text(message));
+    // ignore: deprecated_member_use
     Scaffold.of(context).showSnackBar(snackBar);
   }
 

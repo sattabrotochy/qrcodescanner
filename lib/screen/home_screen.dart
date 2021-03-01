@@ -33,18 +33,18 @@ class _HomeScreenState extends State<HomeScreen> {
         return qrCode="no data";
 
       if(qrCode== '-1')
-        {
-         qrCode="no data";
+      {
+        qrCode="no data";
         // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CodeDetails(code: qrCode,)));
-         navigateToDetail(Note(''),qrCode);
-        }
+        navigateToDetail(Note(''),qrCode);
+      }
       else{
         setState(() {
 
-            this.qrCode = qrCode;
-           // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CodeDetails(code: qrCode,)));
+          this.qrCode = qrCode;
+          // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>CodeDetails(code: qrCode,)));
 
-            navigateToDetail(Note(''),qrCode);
+          navigateToDetail(Note(''),qrCode);
         });
       }
 
@@ -68,14 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButtonLocation:
       FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.cyan,
-        onPressed: scanQRCode,
-        child: Image(
-          height: 50,
-          width: 50,
-          image: AssetImage('asset/qr-code.png'),
-        )
+          backgroundColor: Colors.white,
+          foregroundColor: Colors.cyan,
+          onPressed: scanQRCode,
+          child: Image(
+            height: 50,
+            width: 50,
+            image: AssetImage('asset/qr-code.png'),
+          )
       ),
       bottomNavigationBar: BottomAppBar(
 
@@ -86,25 +86,25 @@ class _HomeScreenState extends State<HomeScreen> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
-              color: Colors.cyan[600],
-              height: 50,
+                color: Colors.cyan[600],
+                height: 50,
                 child: Text('')),
             Text('')
           ],
         ),
       ),
 
-        body: Center(
+      body: Center(
 
-          child: Image(
-            image: AssetImage('asset/qr_code_scanning.jpg'),
-          ),
-    ),
+        child: Image(
+          image: AssetImage('asset/qr_code_scanning.jpg'),
+        ),
+      ),
     );
   }
 
   void navigateToDetail(Note note,String code) {
-      Navigator.push(context, MaterialPageRoute(builder: (context) {
+    Navigator.push(context, MaterialPageRoute(builder: (context) {
       return CodeDetails(note,code);
     }));
   }

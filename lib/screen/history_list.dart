@@ -17,6 +17,7 @@ class _HistoryListState extends State<HistoryList> {
   @override
   Widget build(BuildContext context) {
     if (noteList == null) {
+      // ignore: deprecated_member_use
       noteList = List<Note>();
       updateListView();
     }
@@ -38,7 +39,7 @@ class _HistoryListState extends State<HistoryList> {
           child: Card(
             color: Colors.cyan[600],
             elevation: 2.0,
-            child: ListTile(
+            child: noteList != null?ListTile(
               title: Text(
                 this.noteList[index].title,
                 style: TextStyle(color: Colors.white),
@@ -56,6 +57,8 @@ class _HistoryListState extends State<HistoryList> {
                 // debugPrint("ListTile Tapped");
                 navigateToDetail(this.noteList[index], 'History');
               },
+            ):Center(
+              child: Text('No Data'),
             ),
           ),
         );
@@ -86,13 +89,14 @@ class _HistoryListState extends State<HistoryList> {
 
   void _showSnackBar(BuildContext context, String message) {
     final snackBar =
-        SnackBar(backgroundColor: Colors.cyan[600], content: Text(message));
+    SnackBar(backgroundColor: Colors.cyan[600], content: Text(message));
+    // ignore: deprecated_member_use
     Scaffold.of(context).showSnackBar(snackBar);
   }
 
   void navigateToDetail(Note note, String title) async {
     bool result =
-        await Navigator.push(context, MaterialPageRoute(builder: (context) {
+    await Navigator.push(context, MaterialPageRoute(builder: (context) {
       return DetailsScreen(note, title);
     }));
 

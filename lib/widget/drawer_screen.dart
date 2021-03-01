@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:qrcodescanner/screen/history_list.dart';
 import 'package:qrcodescanner/screen/save_list.dart';
 
+import 'package:flutter_share/flutter_share.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+
 Widget drawer(BuildContext context) {
   return Container(
     color: Colors.white,
@@ -9,14 +13,15 @@ Widget drawer(BuildContext context) {
       child: SafeArea(
         child: ListView(
           children: [
+            SizedBox(height: 2,),
             UserAccountsDrawerHeader(
               decoration: BoxDecoration(
                   image: DecorationImage(
-                image: AssetImage(
-                  'asset/qr_code_scanning.jpg',
-                ),
-                fit: BoxFit.cover,
-              )),
+                    image: AssetImage(
+                      'asset/drawer_image.png',
+                    ),
+                    fit: BoxFit.cover,
+                  )),
             ),
             ListTile(
               onTap: () {
@@ -48,32 +53,31 @@ Widget drawer(BuildContext context) {
               onTap: () {
                 //  HistoryList
 
-                //  sharedata("lallal",
-                //     "https://www.youtube.com/results?search_query=+share+system+use+in+flutter");
-                // FlutterShare.share(
-                //     title: "sad",
-                //     linkUrl: "https://www.youtube.com/watch?v=AdnVzpYYcuI");
+                sharedata("QR Code Scanner",
+                    "https://www.youtube.com/results?search_query=+share+system+use+in+flutter");
               },
               title: Text("Share"),
-              leading: Icon(Icons.share_rounded),
+              leading: Icon(Icons.share_rounded,color: Colors.cyan[600],),
             ),
             ListTile(
-              //   onTap: _launchURL,
+              onTap: _launchURL,
               title: Text("More Apps"),
-              leading: Icon(Icons.mobile_friendly_rounded),
+              leading: Icon(Icons.mobile_friendly_rounded,color: Colors.cyan[600]),
             ),
-            ListTile(
-              onTap: () {
-                // Navigator.of(context).push(
-                //     MaterialPageRoute(builder: (context) => AirtelPage()));
-                // Navigator.of(context).pop();
-              },
-              title: Text("About"),
-              leading: Icon(Icons.list),
-            )
           ],
         ),
       ),
     ),
   );
+}
+
+Future sharedata(String s, String t) async {
+  await FlutterShare.share(
+    title: s,
+    linkUrl: t,
+  );
+}
+_launchURL() async {
+  String url = '';
+  await launch(url);
 }

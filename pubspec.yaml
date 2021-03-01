@@ -41,6 +41,13 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.8.1
+
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "asset/qr-code-scan.png"
 
 
 
@@ -60,6 +67,7 @@ flutter:
   assets:
     - asset/qr-code.png
     - asset/qr_code_scanning.jpg
+    - asset/drawer_image.png
 
 
   # An image asset can refer to one or more resolution-specific "variants", see
